@@ -107,55 +107,55 @@ const preload: Configuration = {
 };
 
 // レンダラープロセス用の設定
-// const renderer: Configuration = {
-//   ...base,
-//   // セキュリティ対策として 'electron-renderer' ターゲットは使用しない
-//   target: 'web',
-//   entry: {
-//     renderer: './src/renderer.tsx',
-//   },
-//   plugins: [
-//     /**
-//      * バンドルしたJSファイルを <script></script> タグとして差し込んだ
-//      * HTMLファイルを出力するプラグイン
-//      */
-//     new HtmlWebpackPlugin({
-//       template: './src/index.html',
-//       minify: !isDev,
-//       inject: 'body',
-//       filename: 'index.html',
-//       scriptLoading: 'blocking',
-//     }),
-//     new MiniCssExtractPlugin(),
-//   ],
-// };
+const renderer: Configuration = {
+  ...base,
+  // セキュリティ対策として 'electron-renderer' ターゲットは使用しない
+  target: 'web',
+  entry: {
+    renderer: './src/renderer.tsx',
+  },
+  plugins: [
+    /**
+     * バンドルしたJSファイルを <script></script> タグとして差し込んだ
+     * HTMLファイルを出力するプラグイン
+     */
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      minify: !isDev,
+      inject: 'body',
+      filename: 'index.html',
+      scriptLoading: 'blocking',
+    }),
+    new MiniCssExtractPlugin(),
+  ],
+};
 
 // レンダラープロセス用
-const renderer = {
-  mode: 'development',
-  target: 'electron-renderer',
-  devtool: 'inline-source-map',
-  entry: path.join(__dirname, 'src', 'renderer', 'index'),
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist', 'scripts'),
-  },
-  resolve: {
-    extensions: ['.json', '.js', '.jsx', '.css', '.ts', '.tsx'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.ts[x]?$/,
-        use: ['ts-loader'],
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules'),
-        ],
-      },
-    ],
-  },
-};
+// const renderer = {
+//   mode: 'development',
+//   target: 'electron-renderer',
+//   devtool: 'inline-source-map',
+//   entry: path.join(__dirname, 'src', 'renderer', 'index'),
+//   output: {
+//     filename: 'index.js',
+//     path: path.resolve(__dirname, 'dist', 'scripts'),
+//   },
+//   resolve: {
+//     extensions: ['.json', '.js', '.jsx', '.css', '.ts', '.tsx'],
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.ts[x]?$/,
+//         use: ['ts-loader'],
+//         include: [
+//           path.resolve(__dirname, 'src'),
+//           path.resolve(__dirname, 'node_modules'),
+//         ],
+//       },
+//     ],
+//   },
+// };
 
 /**
  * メイン，プリロード，レンダラーそれぞれの設定を
